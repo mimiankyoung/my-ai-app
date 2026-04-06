@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>유아 행동 분석 AI</title>
+
+<style>
+body {
+  font-family: "Arial";
+  background: #fff7f7;
+  text-align: center;
+}
+
+.container {
+  background: white;
+  padding: 25px;
+  border-radius: 20px;
+  max-width: 650px;
+  margin: auto;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+input, textarea {
+  width: 90%;
+  margin: 6px;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+}
+
+button {
+  padding: 10px 15px;
+  margin: 6px;
+  background: #ff9aa2;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #ff6f7d;
+}
+
+.result {
+  text-align: left;
+  margin-top: 15px;
+  background: #f0f8ff;
+  padding: 15px;
+  border-radius: 15px;
+}
+
+.more {
+  display: none;
+  background: #fff0f5;
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 8px;
+}
+
+.toggle-btn {
+  background: #a0c4ff;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+<h2>👶 유아 행동 코칭 AI</h2>
+
+<input id="name" placeholder="유아 이름">
+<input id="personality" placeholder="성향 (예: 활발함, 소극적)">
+<textarea id="behavior" placeholder="문제 행동 입력"></textarea>
+<textarea id="diary" placeholder="관찰 일지 (선택)"></textarea>
+
+<button onclick="analyze()">코칭 받기</button>
+
+<div class="result" id="result"></div>
+</div>
+
+<script>
+
+function toggle(id){
+  const el = document.getElementById(id);
+  el.style.display = el.style.display === "none" ? "block" : "none";
+}
+
+function analyze() {
+  const personality = document.getElementById("personality").value;
+  const behavior = document.getElementById("behavior").value;
+
+  const result = `
+  <b>📌 기본 코칭</b><br>
+  - 감정 공감 후 올바른 표현 지도<br><br>
+
+  <button class="toggle-btn" onclick="toggle('detail1')">더보기 👇</button>
+  <div id="detail1" class="more">
+    👉 1단계: 감정 공감 (“속상했구나”)<br>
+    👉 2단계: 행동 제한 (“밀면 안돼”)<br>
+    👉 3단계: 대안 제시 (“빌려줘라고 말해볼까?”)<br>
+    👉 4단계: 반복 연습<br>
+  </div>
+
+  <br><b>📚 발달 이론</b><br>
+  - 또래 관계 이해가 아직 미숙한 시기<br><br>
+
+  <button class="toggle-btn" onclick="toggle('detail2')">더보기 👇</button>
+  <div id="detail2" class="more">
+    👉 자기중심적 사고로 친구 입장 이해 어려움<br>
+    👉 역할놀이 활동이 효과적<br>
+  </div>
+
+  <br><b>👨‍👩‍👧 부모 교육</b><br>
+  - 일관된 반응 중요<br><br>
+
+  <button class="toggle-btn" onclick="toggle('detail3')">더보기 👇</button>
+  <div id="detail3" class="more">
+    👉 감정을 말로 표현하도록 지도<br>
+    👉 긍정적 행동 즉시 칭찬<br>
+  </div>
+
+  <br><b>🎨 활동 추천</b><br>
+  - 역할놀이, 감정카드<br><br>
+
+  <button class="toggle-btn" onclick="toggle('detail4')">더보기 👇</button>
+  <div id="detail4" class="more">
+    👉 친구와 상황극 해보기<br>
+    👉 감정 카드로 감정 표현 연습<br>
+  </div>
+
+  <br><b>💬 말하기 예시</b><br>
+  👉 "${behavior} 상황이 있었구나. 속상했겠다. 말로 표현해볼까?"
+  `;
+
+  document.getElementById("result").innerHTML = result;
+}
+
+</script>
+
+</body>
+</html>
