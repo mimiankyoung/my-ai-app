@@ -3,72 +3,67 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>유아 행동 문제 해결 가이드</title>
+<title>유아 행동 코칭 플랫폼</title>
 
 <style>
-
 body{
-    margin:0;
-    padding:20px;
-    background:#FFF8F5;
-    font-family:'Arial';
+font-family:Arial;
+background:#fff7f7;
+margin:0;
+padding:20px;
 }
 
 .container{
-    max-width:900px;
-    margin:auto;
+max-width:1000px;
+margin:auto;
 }
 
-.title{
-    text-align:center;
-    background:white;
-    padding:20px;
-    border-radius:20px;
-    margin-bottom:20px;
+.header{
+background:white;
+padding:25px;
+border-radius:20px;
+text-align:center;
+box-shadow:0 2px 10px rgba(0,0,0,0.1);
+margin-bottom:20px;
 }
 
-.title h1{
-    color:#ff7f7f;
-}
+.header h1{ color:#ff8aa5; }
 
 .card{
-    background:white;
-    padding:20px;
-    border-radius:20px;
-    margin-bottom:20px;
+background:white;
+padding:20px;
+border-radius:20px;
+margin-bottom:20px;
+box-shadow:0 2px 10px rgba(0,0,0,0.08);
 }
 
-select{
-    width:100%;
-    padding:12px;
-    border-radius:10px;
-    border:1px solid #ddd;
-    margin-top:10px;
+select,input{
+width:100%;
+padding:12px;
+border-radius:10px;
+border:1px solid #ddd;
+margin-top:10px;
+margin-bottom:10px;
 }
 
 button{
-    width:100%;
-    padding:12px;
-    margin-top:15px;
-    border:none;
-    border-radius:10px;
-    background:#ff9aa2;
-    color:white;
-    font-size:16px;
-    cursor:pointer;
+background:#ff8aa5;
+color:white;
+border:none;
+padding:12px;
+border-radius:10px;
+cursor:pointer;
+width:100%;
 }
 
-button:hover{
-    background:#ff7b86;
+.result{
+margin-top:20px;
+padding:15px;
+background:#fff0f3;
+border-radius:15px;
 }
 
-#result{
-    margin-top:20px;
-    background:white;
-    padding:20px;
-    border-radius:20px;
-}
-
+h3{ color:#ff6b8a; }
 </style>
 </head>
 
@@ -76,105 +71,155 @@ button:hover{
 
 <div class="container">
 
-<div class="title">
-<h1>👶 유아 행동 문제 해결 가이드</h1>
-<p>유아 행동에 대한 원인과 지도 방법을 확인해보세요.</p>
+<div class="header">
+<h1>🌷 유아 행동 코칭 플랫폼</h1>
+<p>초임교사를 위한 행동 지원 가이드</p>
 </div>
 
 <div class="card">
 
-<label>행동 영역 선택</label>
+<h3>🔍 행동 검색</h3>
 
-<select id="category">
-<option value="">선택하세요</option>
-<option value="peer">또래관계</option>
-<option value="emotion">감정조절</option>
-<option value="rule">규칙생활</option>
-<option value="social">사회성</option>
-</select>
-
-<br><br>
-
-<label>행동 선택</label>
+<input type="text" id="search" placeholder="예: 때림, 울음, 떼쓰기">
 
 <select id="behavior">
-<option value="">먼저 영역을 선택하세요</option>
+<option value="">행동 선택</option>
+
+<option value="hit">친구를 때림</option>
+<option value="grab">장난감 뺏기</option>
+<option value="cry">울음이 많음</option>
+<option value="angry">화를 자주 냄</option>
+<option value="shout">소리 지름</option>
+<option value="tantrum">떼쓰기</option>
+<option value="lie">거짓말</option>
+<option value="clean">정리 안 하기</option>
+<option value="eat">편식</option>
 </select>
 
-<button onclick="showGuide()">
-가이드 보기
-</button>
+<button onclick="showGuide()">행동 코칭 보기</button>
+
+<div id="result"></div>
 
 </div>
-
-<div id="result">
-
-📌 행동을 선택하면 가이드가 나타납니다.
-
-</div>
-
 </div>
 
 <script>
 
 const data = {
 
-peer:[
-"친구를 때림",
-"친구 물건을 뺏음",
-"친구를 놀림"
-],
+hit: `
+<h3>👦 친구를 때림</h3>
+<b>원인</b><br>감정 표현 미숙, 충동성
 
-emotion:[
-"떼쓰기",
-"울음이 잦음",
-"화를 참지 못함"
-],
+<br><br>
+<b>교사 대응</b><br>
+① 즉시 안전 확보<br>
+② 감정 말로 표현하게 돕기<br>
+③ 대안 행동 제시
+`,
 
-rule:[
-"정리정돈 안 함",
-"차례 기다리지 못함",
-"수업 중 돌아다님"
-],
+grab: `
+<h3>🧸 장난감 뺏기</h3>
+<b>원인</b><br>즉각적 욕구 충동
 
-social:[
-"혼자 놀이함",
-"발표를 두려워함",
-"낯가림이 심함"
-]
+<br><br>
+<b>교사 대응</b><br>
+① 차례 개념 지도<br>
+② “나도 할 수 있어?” 말로 표현하기
+`,
 
+cry: `
+<h3>😢 울음이 많음</h3>
+<b>원인</b><br>언어보다 감정 표현이 먼저 나오는 시기
+
+<br><br>
+<b>교사 대응</b><br>
+감정 읽어주기 ("속상했구나")
+`,
+
+angry: `
+<h3>😡 화를 자주 냄</h3>
+<b>원인</b><br>감정 조절 미숙
+
+<br><br>
+<b>교사 대응</b><br>
+감정 인정 + 진정 시간 제공
+`,
+
+shout: `
+<h3>📣 소리 지름</h3>
+<b>원인</b><br>주의 끌기 또는 감정 과잉
+
+<br><br>
+<b>교사 대응</b><br>
+작은 목소리 모델링
+`,
+
+tantrum: `
+<h3>😥 떼쓰기</h3>
+<b>원인</b><br>욕구 좌절
+
+<br><br>
+<b>교사 대응</b><br>
+감정 공감 후 규칙 설명
+`,
+
+lie: `
+<h3>🦊 거짓말</h3>
+<b>원인</b><br>혼날까 두려움
+
+<br><br>
+<b>교사 대응</b><br>
+안전하게 말할 수 있는 분위기 제공
+`,
+
+clean: `
+<h3>🧸 정리 안 하기</h3>
+<b>원인</b><br>놀이 몰입
+
+<br><br>
+<b>교사 대응</b><br>
+시각적 정리 단계 제공
+`,
+
+eat: `
+<h3>🍚 편식</h3>
+<b>원인</b><br>감각 민감성
+
+<br><br>
+<b>교사 대응</b><br>
+강요 없이 반복 노출
+`
 };
-
-const category =
-document.getElementById("category");
-
-const behavior =
-document.getElementById("behavior");
-
-category.addEventListener("change", function(){
-
-behavior.innerHTML = "";
-
-data[this.value].forEach(item => {
-
-const option =
-document.createElement("option");
-
-option.textContent = item;
-
-behavior.appendChild(option);
-
-});
-
-});
 
 function showGuide(){
 
-document.getElementById("result").innerHTML = `
-<h2>${behavior.value}</h2>
-<p>다음 단계에서 상세 가이드를 추가할 예정입니다.</p>
-`;
+const input = document.getElementById("search").value.toLowerCase();
+const select = document.getElementById("behavior").value;
+const result = document.getElementById("result");
 
+let key = select;
+
+// 검색어로도 찾기
+if(!key && input){
+
+if(input.includes("때") || input.includes("때림")) key="hit";
+else if(input.includes("뺏")) key="grab";
+else if(input.includes("울")) key="cry";
+else if(input.includes("화")) key="angry";
+else if(input.includes("소리")) key="shout";
+else if(input.includes("떼")) key="tantrum";
+else if(input.includes("거짓")) key="lie";
+else if(input.includes("정리")) key="clean";
+else if(input.includes("편식") || input.includes("먹")) key="eat";
+}
+
+if(!key || !data[key]){
+result.innerHTML = "<div class='result'>행동을 선택하거나 검색해주세요.</div>";
+return;
+}
+
+result.innerHTML = "<div class='result'>" + data[key] + "</div>";
 }
 
 </script>
