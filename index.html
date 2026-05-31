@@ -2,139 +2,179 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>유아 행동 분석 AI</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>유아 행동 문제 해결 가이드</title>
 
 <style>
-body {
-  font-family: "Arial";
-  background: #fff7f7;
-  text-align: center;
+
+body{
+    margin:0;
+    padding:20px;
+    background:#FFF8F5;
+    font-family:'Arial';
 }
 
-.container {
-  background: white;
-  padding: 25px;
-  border-radius: 20px;
-  max-width: 650px;
-  margin: auto;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+.container{
+    max-width:900px;
+    margin:auto;
 }
 
-input, textarea {
-  width: 90%;
-  margin: 6px;
-  padding: 10px;
-  border-radius: 12px;
-  border: 1px solid #ddd;
+.title{
+    text-align:center;
+    background:white;
+    padding:20px;
+    border-radius:20px;
+    margin-bottom:20px;
 }
 
-button {
-  padding: 10px 15px;
-  margin: 6px;
-  background: #ff9aa2;
-  color: white;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
+.title h1{
+    color:#ff7f7f;
 }
 
-button:hover {
-  background: #ff6f7d;
+.card{
+    background:white;
+    padding:20px;
+    border-radius:20px;
+    margin-bottom:20px;
 }
 
-.result {
-  text-align: left;
-  margin-top: 15px;
-  background: #f0f8ff;
-  padding: 15px;
-  border-radius: 15px;
+select{
+    width:100%;
+    padding:12px;
+    border-radius:10px;
+    border:1px solid #ddd;
+    margin-top:10px;
 }
 
-.more {
-  display: none;
-  background: #fff0f5;
-  padding: 10px;
-  border-radius: 10px;
-  margin-top: 8px;
+button{
+    width:100%;
+    padding:12px;
+    margin-top:15px;
+    border:none;
+    border-radius:10px;
+    background:#ff9aa2;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
 }
 
-.toggle-btn {
-  background: #a0c4ff;
+button:hover{
+    background:#ff7b86;
 }
+
+#result{
+    margin-top:20px;
+    background:white;
+    padding:20px;
+    border-radius:20px;
+}
+
 </style>
-
 </head>
 
 <body>
 
 <div class="container">
-<h2>👶 유아 행동 코칭 AI</h2>
 
-<input id="name" placeholder="유아 이름">
-<input id="personality" placeholder="성향 (예: 활발함, 소극적)">
-<textarea id="behavior" placeholder="문제 행동 입력"></textarea>
-<textarea id="diary" placeholder="관찰 일지 (선택)"></textarea>
+<div class="title">
+<h1>👶 유아 행동 문제 해결 가이드</h1>
+<p>유아 행동에 대한 원인과 지도 방법을 확인해보세요.</p>
+</div>
 
-<button onclick="analyze()">코칭 받기</button>
+<div class="card">
 
-<div class="result" id="result"></div>
+<label>행동 영역 선택</label>
+
+<select id="category">
+<option value="">선택하세요</option>
+<option value="peer">또래관계</option>
+<option value="emotion">감정조절</option>
+<option value="rule">규칙생활</option>
+<option value="social">사회성</option>
+</select>
+
+<br><br>
+
+<label>행동 선택</label>
+
+<select id="behavior">
+<option value="">먼저 영역을 선택하세요</option>
+</select>
+
+<button onclick="showGuide()">
+가이드 보기
+</button>
+
+</div>
+
+<div id="result">
+
+📌 행동을 선택하면 가이드가 나타납니다.
+
+</div>
+
 </div>
 
 <script>
 
-function toggle(id){
-  const el = document.getElementById(id);
-  el.style.display = el.style.display === "none" ? "block" : "none";
-}
+const data = {
 
-function analyze() {
-  const personality = document.getElementById("personality").value;
-  const behavior = document.getElementById("behavior").value;
+peer:[
+"친구를 때림",
+"친구 물건을 뺏음",
+"친구를 놀림"
+],
 
-  const result = `
-  <b>📌 기본 코칭</b><br>
-  - 감정 공감 후 올바른 표현 지도<br><br>
+emotion:[
+"떼쓰기",
+"울음이 잦음",
+"화를 참지 못함"
+],
 
-  <button class="toggle-btn" onclick="toggle('detail1')">더보기 👇</button>
-  <div id="detail1" class="more">
-    👉 1단계: 감정 공감 (“속상했구나”)<br>
-    👉 2단계: 행동 제한 (“밀면 안돼”)<br>
-    👉 3단계: 대안 제시 (“빌려줘라고 말해볼까?”)<br>
-    👉 4단계: 반복 연습<br>
-  </div>
+rule:[
+"정리정돈 안 함",
+"차례 기다리지 못함",
+"수업 중 돌아다님"
+],
 
-  <br><b>📚 발달 이론</b><br>
-  - 또래 관계 이해가 아직 미숙한 시기<br><br>
+social:[
+"혼자 놀이함",
+"발표를 두려워함",
+"낯가림이 심함"
+]
 
-  <button class="toggle-btn" onclick="toggle('detail2')">더보기 👇</button>
-  <div id="detail2" class="more">
-    👉 자기중심적 사고로 친구 입장 이해 어려움<br>
-    👉 역할놀이 활동이 효과적<br>
-  </div>
+};
 
-  <br><b>👨‍👩‍👧 부모 교육</b><br>
-  - 일관된 반응 중요<br><br>
+const category =
+document.getElementById("category");
 
-  <button class="toggle-btn" onclick="toggle('detail3')">더보기 👇</button>
-  <div id="detail3" class="more">
-    👉 감정을 말로 표현하도록 지도<br>
-    👉 긍정적 행동 즉시 칭찬<br>
-  </div>
+const behavior =
+document.getElementById("behavior");
 
-  <br><b>🎨 활동 추천</b><br>
-  - 역할놀이, 감정카드<br><br>
+category.addEventListener("change", function(){
 
-  <button class="toggle-btn" onclick="toggle('detail4')">더보기 👇</button>
-  <div id="detail4" class="more">
-    👉 친구와 상황극 해보기<br>
-    👉 감정 카드로 감정 표현 연습<br>
-  </div>
+behavior.innerHTML = "";
 
-  <br><b>💬 말하기 예시</b><br>
-  👉 "${behavior} 상황이 있었구나. 속상했겠다. 말로 표현해볼까?"
-  `;
+data[this.value].forEach(item => {
 
-  document.getElementById("result").innerHTML = result;
+const option =
+document.createElement("option");
+
+option.textContent = item;
+
+behavior.appendChild(option);
+
+});
+
+});
+
+function showGuide(){
+
+document.getElementById("result").innerHTML = `
+<h2>${behavior.value}</h2>
+<p>다음 단계에서 상세 가이드를 추가할 예정입니다.</p>
+`;
+
 }
 
 </script>
