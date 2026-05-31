@@ -27,7 +27,9 @@ box-shadow:0 2px 10px rgba(0,0,0,0.1);
 margin-bottom:20px;
 }
 
-.header h1{ color:#ff8aa5; }
+.header h1{
+color:#ff8aa5;
+}
 
 .card{
 background:white;
@@ -37,7 +39,7 @@ margin-bottom:20px;
 box-shadow:0 2px 10px rgba(0,0,0,0.08);
 }
 
-select,input{
+select{
 width:100%;
 padding:12px;
 border-radius:10px;
@@ -63,7 +65,9 @@ background:#fff0f3;
 border-radius:15px;
 }
 
-h3{ color:#ff6b8a; }
+h3{
+color:#ff6b8a;
+}
 </style>
 </head>
 
@@ -78,22 +82,25 @@ h3{ color:#ff6b8a; }
 
 <div class="card">
 
-<h3>🔍 행동 검색</h3>
+<h3>📌 행동 선택</h3>
 
-<input type="text" id="search" placeholder="예: 때림, 울음, 떼쓰기">
+<!-- 1단계: 영역 -->
+<select id="category">
+<option value="">행동 영역 선택</option>
+<option value="emotion">정서 행동</option>
+<option value="social">사회성 행동</option>
+<option value="self">자기조절 행동</option>
+</select>
 
+<!-- 2단계: 행동 -->
 <select id="behavior">
 <option value="">행동 선택</option>
-
 <option value="hit">친구를 때림</option>
-<option value="grab">장난감 뺏기</option>
 <option value="cry">울음이 많음</option>
 <option value="angry">화를 자주 냄</option>
-<option value="shout">소리 지름</option>
-<option value="tantrum">떼쓰기</option>
-<option value="lie">거짓말</option>
+<option value="grab">장난감 뺏기</option>
 <option value="clean">정리 안 하기</option>
-<option value="eat">편식</option>
+<option value="wait">차례 기다리기 어려움</option>
 </select>
 
 <button onclick="showGuide()">행동 코칭 보기</button>
@@ -107,119 +114,192 @@ h3{ color:#ff6b8a; }
 
 const data = {
 
-hit: `
-<h3>👦 친구를 때림</h3>
-<b>원인</b><br>감정 표현 미숙, 충동성
-
-<br><br>
-<b>교사 대응</b><br>
-① 즉시 안전 확보<br>
-② 감정 말로 표현하게 돕기<br>
-③ 대안 행동 제시
-`,
-
-grab: `
-<h3>🧸 장난감 뺏기</h3>
-<b>원인</b><br>즉각적 욕구 충동
-
-<br><br>
-<b>교사 대응</b><br>
-① 차례 개념 지도<br>
-② “나도 할 수 있어?” 말로 표현하기
-`,
-
+emotion: {
 cry: `
 <h3>😢 울음이 많음</h3>
-<b>원인</b><br>언어보다 감정 표현이 먼저 나오는 시기
+
+<b>행동 설명</b><br>
+언어보다 감정 표현이 먼저 발달하는 시기에 나타나는 자연스러운 반응
 
 <br><br>
-<b>교사 대응</b><br>
-감정 읽어주기 ("속상했구나")
+
+<b>가능한 원인</b><br>
+□ 불편함<br>
+□ 요구 표현 어려움<br>
+□ 피로<br>
+□ 주의 끌기
+
+<br><br>
+
+<b>교사 핵심 가이드</b><br>
+감정을 막기보다 안정 제공 → 감정 라벨링 → 선택지 제공
+
+<br><br>
+
+<b>즉시 대응</b><br>
+“속상했구나, 선생님이 옆에 있어줄게”
+
+<br><br>
+
+<b>전문 설명</b><br>
+정서조절 능력은 애착 관계와 경험을 통해 발달함
+
+<br><br>
+
+<b>발달 이론</b><br>
+Vygotsky: 사회적 상호작용을 통한 정서 발달<br>
+Erikson: 신뢰 형성 단계
 `,
 
 angry: `
 <h3>😡 화를 자주 냄</h3>
-<b>원인</b><br>감정 조절 미숙
+
+<b>행동 설명</b><br>
+좌절 상황에서 감정 조절이 어려운 외현화 행동
 
 <br><br>
-<b>교사 대응</b><br>
-감정 인정 + 진정 시간 제공
-`,
 
-shout: `
-<h3>📣 소리 지름</h3>
-<b>원인</b><br>주의 끌기 또는 감정 과잉
+<b>가능한 원인</b><br>
+□ 좌절 경험<br>
+□ 감정 조절 미숙<br>
+□ 피로
 
 <br><br>
-<b>교사 대응</b><br>
-작은 목소리 모델링
-`,
 
-tantrum: `
-<h3>😥 떼쓰기</h3>
-<b>원인</b><br>욕구 좌절
+<b>교사 핵심 가이드</b><br>
+즉시 훈육보다 안정화 → 감정 인정 → 이후 지도
 
 <br><br>
-<b>교사 대응</b><br>
-감정 공감 후 규칙 설명
-`,
 
-lie: `
-<h3>🦊 거짓말</h3>
-<b>원인</b><br>혼날까 두려움
+<b>즉시 대응</b><br>
+“지금 많이 화가 났구나. 잠깐 쉬자”
 
 <br><br>
-<b>교사 대응</b><br>
-안전하게 말할 수 있는 분위기 제공
+
+<b>발달 이론</b><br>
+전전두엽 발달이 미완성 상태로 충동 조절이 어려움
+`
+},
+
+social: {
+hit: `
+<h3>👊 친구를 때림</h3>
+
+<b>행동 설명</b><br>
+또래 갈등에서 감정 표현이 신체 행동으로 나타나는 경우
+
+<br><br>
+
+<b>가능한 원인</b><br>
+□ 욕구 충족 실패<br>
+□ 관심 요구<br>
+□ 언어 표현 부족
+
+<br><br>
+
+<b>교사 핵심 가이드</b><br>
+즉시 중재 → 감정 언어화 → 대체 행동 지도
+
+<br><br>
+
+<b>즉시 대응</b><br>
+“손은 아프게 쓰는 게 아니야. 말로 해보자”
+
+<br><br>
+
+<b>발달 이론</b><br>
+Piaget: 자기중심성으로 타인 이해 부족<br>
+Vygotsky: 사회적 상호작용으로 행동 학습
 `,
 
+grab: `
+<h3>🧸 장난감 뺏기</h3>
+
+<b>행동 설명</b><br>
+즉각적 욕구 충동으로 인해 발생하는 행동
+
+<br><br>
+
+<b>교사 핵심 가이드</b><br>
+차례 개념 지도 + 언어 표현 모델링
+
+<br><br>
+
+<b>즉시 대응</b><br>
+“나도 하고 싶어요라고 말해보자”
+
+<br><br>
+
+<b>발달 이론</b><br>
+사회적 규칙 학습 초기 단계
+`
+},
+
+self: {
 clean: `
 <h3>🧸 정리 안 하기</h3>
-<b>원인</b><br>놀이 몰입
+
+<b>행동 설명</b><br>
+놀이 몰입과 책임 개념 발달 과정
 
 <br><br>
-<b>교사 대응</b><br>
-시각적 정리 단계 제공
+
+<b>교사 핵심 가이드</b><br>
+시각적 구조 제공 + 단계적 정리 지도
+
+<br><br>
+
+<b>즉시 대응</b><br>
+“하나씩 같이 정리해보자”
+
+<br><br>
+
+<b>발달 이론</b><br>
+인지 발달 과정에서 계획 능력 미숙
 `,
 
-eat: `
-<h3>🍚 편식</h3>
-<b>원인</b><br>감각 민감성
+wait: `
+<h3>⏳ 기다리기 어려움</h3>
+
+<b>행동 설명</b><br>
+충동 조절 능력이 발달 중인 시기
 
 <br><br>
-<b>교사 대응</b><br>
-강요 없이 반복 노출
+
+<b>교사 핵심 가이드</b><br>
+기다림 시각화 + 짧은 성공 경험 제공
+
+<br><br>
+
+<b>즉시 대응</b><br>
+“조금만 기다리면 네 차례야”
+
+<br><br>
+
+<b>발달 이론</b><br>
+전전두엽 발달 초기 단계
 `
+}
 };
 
 function showGuide(){
 
-const input = document.getElementById("search").value.toLowerCase();
-const select = document.getElementById("behavior").value;
+const category = document.getElementById("category").value;
+const behavior = document.getElementById("behavior").value;
 const result = document.getElementById("result");
 
-let key = select;
-
-// 검색어로도 찾기
-if(!key && input){
-
-if(input.includes("때") || input.includes("때림")) key="hit";
-else if(input.includes("뺏")) key="grab";
-else if(input.includes("울")) key="cry";
-else if(input.includes("화")) key="angry";
-else if(input.includes("소리")) key="shout";
-else if(input.includes("떼")) key="tantrum";
-else if(input.includes("거짓")) key="lie";
-else if(input.includes("정리")) key="clean";
-else if(input.includes("편식") || input.includes("먹")) key="eat";
-}
-
-if(!key || !data[key]){
-result.innerHTML = "<div class='result'>행동을 선택하거나 검색해주세요.</div>";
+if(!category || !behavior){
+result.innerHTML = "<div class='result'>영역과 행동을 모두 선택해주세요.</div>";
 return;
 }
 
-result.innerHTML = "<div class='result'>" + data[key] + "</div>";
+if(!data[category] || !data[category][behavior]){
+result.innerHTML = "<div class='result'>해당 가이드가 없습니다.</div>";
+return;
+}
+
+result.innerHTML =
+"<div class='result'>" + data[category][behavior] + "</div>";
 }
 
 </script>
