@@ -84,14 +84,6 @@ color:#ff6b8a;
 
 <h3>📌 행동 선택</h3>
 
-<!-- 🔥 행동 영역 -->
-<select id="category">
-<option value="">행동 영역 선택</option>
-<option value="emotion">정서 행동</option>
-<option value="social">사회성 행동</option>
-<option value="self">자기조절 행동</option>
-</select>
-
 <!-- 🔥 행동 선택 -->
 <select id="behavior">
 <option value="">행동 선택</option>
@@ -114,7 +106,6 @@ color:#ff6b8a;
 
 const data = {
 
-emotion: {
 cry: `
 <h3>😢 울음이 많음</h3>
 
@@ -394,10 +385,8 @@ angry: `
 ✔ 반복되는 상황이 있는지 관찰하기<br>
 
 ✔ 화를 잘 표현했을 때도 적극적으로 칭찬하기
-`
-},
-
-social: {
+`,
+  
 hit: `
 <h3>👊 친구를 때림</h3>
 
@@ -714,10 +703,8 @@ grab: `
 ✔ 기다린 행동을 적극적으로 칭찬하기<br>
 
 ✔ 말로 요청하는 표현을 지속적으로 모델링하기
-`
-},
+`,
 
-self: {
 clean: `
 <h3>🧸 정리 안 하기</h3>
 
@@ -1036,28 +1023,35 @@ wait: `
 ✔ 기다린 행동을 적극적으로 칭찬하기<br>
 
 ✔ 기다림이 필요한 일과를 반복적으로 경험하게 하기
-`
+`,
 }
 };
 
 function showGuide(){
 
-const category = document.getElementById("category").value;
-const behavior = document.getElementById("behavior").value;
-const result = document.getElementById("result");
+const behavior =
+document.getElementById("behavior").value;
 
-if(!category || !behavior){
-result.innerHTML = "<div class='result'>영역과 행동을 모두 선택해주세요.</div>";
+const result =
+document.getElementById("result");
+
+if(!behavior){
+result.innerHTML =
+"<div class='result'>행동을 선택해주세요.</div>";
 return;
 }
 
-if(!data[category] || !data[category][behavior]){
-result.innerHTML = "<div class='result'>해당 가이드가 없습니다.</div>";
+if(!data[behavior]){
+result.innerHTML =
+"<div class='result'>해당 가이드가 없습니다.</div>";
 return;
 }
 
 result.innerHTML =
-"<div class='result'>" + data[category][behavior] + "</div>";
+"<div class='result'>" +
+data[behavior] +
+"</div>";
+
 }
 </script>
 
